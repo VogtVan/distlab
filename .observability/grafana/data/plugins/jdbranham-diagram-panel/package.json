@@ -1,0 +1,42 @@
+{
+  "name": "grafana-diagram",
+  "version": "1.7.1",
+  "description": "Display diagrams and charts in Grafana with colored metric indicators",
+  "scripts": {
+    "build": "grafana-toolkit plugin:build",
+    "test": "grafana-toolkit plugin:test",
+    "dev": "grafana-toolkit plugin:dev",
+    "watch": "grafana-toolkit plugin:dev --watch"
+  },
+  "homepage": "https://github.com/jdbranham/grafana-diagram#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdbranham/grafana-diagram.git"
+  },
+  "author": "Jeremy Branham <jeremy@savantly.net> (https://github.com/jdbranham)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jdbranham/grafana-diagram/issues",
+    "email": "bugs@savantly.net"
+  },
+  "devDependencies": {
+    "@grafana/data": "7.1.5",
+    "@grafana/toolkit": "7.1.5",
+    "@grafana/ui": "7.1.5",
+    "@types/d3": "^5.7.2",
+    "@types/lodash": "^4.14.161",
+    "@types/mermaid": "^8.2.1",
+    "emotion": "10.0.27"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.11"
+  },
+  "dependencies": {
+    "@analytics/google-analytics": "^0.5.0",
+    "analytics": "^0.5.5",
+    "mermaid": "^8.8.0"
+  },
+  "engines": {
+    "node": ">=12 <13"
+  }
+}

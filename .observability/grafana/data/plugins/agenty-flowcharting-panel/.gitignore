@@ -1,0 +1,11 @@
+/bower_components
+/externals
+/node_modules
+/externals
+/.vscode
+/archives
+/public
+/coverage
+/archives
+
+yarn-error.log

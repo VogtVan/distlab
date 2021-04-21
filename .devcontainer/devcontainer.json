@@ -1,0 +1,39 @@
+{
+	"name": "THESIS",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { }
+	},
+	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true",
+		"HOST_PROJECT_PATH": "${localWorkspaceFolder}"
+	},
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.ssh,target=/root/.ssh,type=bind"
+		// Uncomment the next line to also sync certs in your .minikube folder
+		// "source=${env:HOME}${env:USERPROFILE}/.minikube,target=/usr/local/share/minikube-localhost,type=bind"
+	],
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-azuretools.vscode-docker",
+		"ms-kubernetes-tools.vscode-kubernetes-tools",
+		"ms-dotnettools.csharp"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [5000, 5001],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "dotnet restore",
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+}

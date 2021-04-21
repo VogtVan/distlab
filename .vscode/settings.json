@@ -1,0 +1,8 @@
+{
+    "csharp.unitTestDebuggingOptions": {
+        "sourceFileMap": {
+            "E:/THESE/CODE/msbd.thesis.sim.test/bin/Debug/net5.0": "E:/THESE/CODE/msbd.thesis.sim.test"
+        },
+        "justMyCode": true
+    }
+}

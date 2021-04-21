@@ -1,0 +1,53 @@
+Config: # configuration section for the controller
+    Log:
+        LogLevelName: "Information" # Critical | Debug | Error | Information | None | Trace | Warning
+        LogToConsole: true
+        IsLogJsonFormat: false    
+    ContainerHost: "thread" # process | thread
+    Prometheus:
+        Port: 7777
+    Traces:
+        #Jaeger:
+        #    #Host: "jaeger"
+        #    Host: "127.0.0.1"
+        #    Port: 6831
+        Zipkin:
+            #Host: "zipkin"
+            Host: "127.0.0.1"
+            Port: 9411
+            Path: "/api/v2/spans"
+    TracesEnabled: true
+Services: # services to launch
+-   Name: "inmemorydb"
+    AssemblyName: "services.dll"
+    TypeName: "msbd.thesis.consistency.db.InMemoryDatabase"
+    Instances: 3
+    Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
+    -   Index: 0
+        IsSynchronous: false
+        TracesEnabled: true
+        Prometheus:
+            Port: 7778
+    -   Index: 1
+        LinkMinDelayMs: 0
+        TracesEnabled: true
+        Prometheus:
+            Port: 7779
+    -   Index: 2
+        LinkMinDelayMs: 0
+        TracesEnabled: true
+-   Name: "inmemorydbclient"
+    AssemblyName: "services.dll"
+    TypeName: "msbd.thesis.consistency.db.InMemoryDatabaseClient"
+    Instances: 1
+    Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
+    -   Index: 0
+        TracesEnabled: true
+        Prometheus:
+            Port: 7780
+            Metrics:
+            - Type: "Counter"
+              Name: "readYourWrites"
+              Description: "Indicates how many read operation were different from previous write"
+              LabelsNames:
+              - "index"

@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Distlab",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/.controller/distlab.controller.exe",
+            "args": ["inMemoryDBEventual"],
+            "env": {
+                "THESIS_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container", 
+                "THESIS_CONTAINERS_ASSEMBLY_ROOT": "${workspaceFolder}/.containers", 
+                "THESIS_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
+            },
+            //"cwd": "${workspaceFolder}/.controller",
+            "console": "internalConsole",
+            "stopAtEntry": false,            
+            "justMyCode": true
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}",           
+            "justMyCode": false
+        }
+    ]
+}

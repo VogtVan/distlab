@@ -35,8 +35,8 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
-.container
+#.container
 .containers
-.controller
+#.controller
 # Visual Studio 2015
 .vs/

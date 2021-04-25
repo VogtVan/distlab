@@ -212,4 +212,20 @@ Specific dashboards should be developped depending on the different aspects of y
 - Grafan UI is available here after launch: [http://127.0.0.1:9030/](http://127.0.0.1:9030/) 
 
 # DEVELOPING SERVICES (TODO)
+
+To develop a service you need to define it from a base Container class.
+
+A sample is available [here](./src/samples/db).
+
+To enter the debug mode you need define the lauch mode to "thread" in the data plan and you need to launch the simulation from VSCode.
+
+To run the simulation you need to pass the data plan name to the controller program:
+
+```cmd
+dotnet distlab.controller.dll <dataplan.yaml>
+```
+
 # DATAPLAN REFERENCE (TODO)
+In order to launch a set of services you need to define a data plan in the .dataplan folder. A sample is defined  [here](.dataplan/InMemoryDBEventual.yaml).
+
+

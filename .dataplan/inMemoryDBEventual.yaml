@@ -3,7 +3,7 @@ Config: # configuration section for the controller
         LogLevelName: "Information" # Critical | Debug | Error | Information | None | Trace | Warning
         LogToConsole: true
         IsLogJsonFormat: false    
-    ContainerHost: "process" # process | thread
+    ContainerHost: "process" # process | thread - Please use thread mode for debug and process mode to collect traces and metrics
     Prometheus:
         Port: 7777
     Traces:
@@ -11,20 +11,21 @@ Config: # configuration section for the controller
             Host: "127.0.0.1"
             Port: 9411
             Path: "/api/v2/spans"
-    TracesEnabled: true
+    TracesEnabled: true # affect Zipkin or Jaeger exporters only
 Services: # services to launch
--   Name: "inmemorydb"
-    AssemblyName: "services.dll"
-    TypeName: "distlab.samples.db.InMemoryDatabase"
-    Instances: 3
+-   Name: "inmemorydb" # public service name used to communicate
+    AssemblyName: "services.dll" # assembly where the service is defined
+    TypeName: "distlab.samples.db.InMemoryDatabase" # type of the service (derived from dislab.runtime.container.Container)
+    Instances: 3 # number of instances to maintain - each instance will be given a spepcific index
     Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
-    -   Index: 0
-        IsSynchronous: false
-        TracesEnabled: true
+    -   Index: 0 # target service for the configuration
+        IsSynchronous: false # custom property config for InMemoryDatabase sample - you may add any custom field
+        TracesEnabled: true 
         Prometheus:
             Port: 7778
     -   Index: 1
-        LinkMinDelayMs: 0
+        LinkMinDelayMs: 0 # no min delay set for the communication link - you may apply a random delay between min and max
+        LinkMaxDelayMs: 0 # no max delay set for the communication link - you may apply a random delay between min and max
         TracesEnabled: true
         Prometheus:
             Port: 7779
@@ -40,9 +41,9 @@ Services: # services to launch
         TracesEnabled: true
         Prometheus:
             Port: 7780
-            Metrics:
-            - Type: "Counter"
-              Name: "readYourWrites"
+            Metrics: # custom metric definition for this sample
+            - Type: "Counter" # Counter | Gauge | Histogram
+              Name: "readYourWrites" # metric name
               Description: "Indicates how many read operation were different from previous write"
-              LabelsNames:
+              LabelsNames: # metric labels 
               - "index"

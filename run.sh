@@ -1,6 +1,6 @@
 #!/bin/bash
-export THESIS_CONTAINER_PGM_PATH=$PWD/.container/distlab.container &&
-export THESIS_CONTAINERS_ASSEMBLY_ROOT=$PWD/.containers &&
-export THESIS_DATA_PLAN_ROOT=$PWD/.dataplan &&
+export DISTLAB_CONTAINER_PGM_PATH=$PWD/.container/distlab.container &&
+export DISTLAB_CONTAINERS_ASSEMBLY_ROOT=$PWD/.containers &&
+export DISTLAB_DATA_PLAN_ROOT=$PWD/.dataplan &&
 cd .controller &&
 dotnet distlab.controller.dll inMemoryDBEventual

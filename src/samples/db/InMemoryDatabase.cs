@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using distlab.runtime.container;
 
-namespace msbd.thesis.consistency.db{
+namespace distlab.samples.db{
 
     public class Config: ContainerConfigDefinition{
         public bool IsSynchronous{get;set;}

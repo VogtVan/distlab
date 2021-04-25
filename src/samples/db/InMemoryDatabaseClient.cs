@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using distlab.runtime.container;
 
-namespace msbd.thesis.consistency.db{
+namespace distlab.samples.db{
     public class InMemoryDatabaseClient : Container{
 
         Random rnd = new Random();

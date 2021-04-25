@@ -15,7 +15,7 @@ Config: # configuration section for the controller
 Services: # services to launch
 -   Name: "inmemorydb"
     AssemblyName: "services.dll"
-    TypeName: "msbd.thesis.consistency.db.InMemoryDatabase"
+    TypeName: "distlab.samples.db.InMemoryDatabase"
     Instances: 3
     Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
     -   Index: 0
@@ -33,7 +33,7 @@ Services: # services to launch
         TracesEnabled: true
 -   Name: "inmemorydbclient"
     AssemblyName: "services.dll"
-    TypeName: "msbd.thesis.consistency.db.InMemoryDatabaseClient"
+    TypeName: "distlab.samples.db.InMemoryDatabaseClient"
     Instances: 1
     Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
     -   Index: 0

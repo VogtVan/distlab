@@ -11,9 +11,9 @@
             "program": "${workspaceFolder}/.controller/distlab.controller",
             "args": ["inMemoryDBEventual"],
             "env": {
-                "THESIS_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container", 
-                "THESIS_CONTAINERS_ASSEMBLY_ROOT": "${workspaceFolder}/.containers", 
-                "THESIS_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
+                "DISTLAB_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container", 
+                "DISTLAB_CONTAINERS_ASSEMBLY_ROOT": "${workspaceFolder}/.containers", 
+                "DISTLAB_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
             },
             "console": "internalConsole",
             "stopAtEntry": false,            

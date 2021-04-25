@@ -8,10 +8,10 @@
             "name": "Distlab",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/.controller/distlab.controller",
+            "program": "${workspaceFolder}/.controller/distlab.controller.exe",
             "args": ["inMemoryDBEventual"],
             "env": {
-                "THESIS_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container", 
+                "THESIS_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container.exe", 
                 "THESIS_CONTAINERS_ASSEMBLY_ROOT": "${workspaceFolder}/.containers", 
                 "THESIS_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
             },

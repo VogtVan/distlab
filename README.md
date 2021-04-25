@@ -11,7 +11,7 @@ Distlab is built on top of open source components. It runs either on Linux or Wi
 - Zipkin for the collection of traces (Jaeger is also supported)
 - Grafana for the dashboards
 
-Even though you can use Distlab with any kind of editor, even with notepad, it is recommended to use it with VS Code because it will simplify the installation of the .Net 5.0 platform and bring you the ability to easily debug your simulation.\
+Even though you can use Distlab with any kind of editor, even with notepad, it is strongly recommended to use it with VS Code because it will simplify the installation of the .Net 5.0 platform and bring you the ability to easily debug your simulation.\
 Currently the implementation has to be done in C#, but it is not necessary to have a in depth knowledge of C# to be able to do interesting things, as the coding part strives to be as close to pseudo code as possible. 
 
 # CONCEPTS
@@ -19,7 +19,7 @@ Currently the implementation has to be done in C#, but it is not necessary to ha
 The simplified view below shows some of the key components making the simulation runtime:
 
 ![Distlab](./img/DistlabConcepts.jpg "Distlab concepts")
-### <ins>The controller</ins>
+### <b>The controller</b>
 
 This is the entry point of the simulation. It is launched with a single argument carrying the data plan name the controller needs to orchestrate. The controller needs three environment variables:
 - DISTLAB_CONTAINER_PGM_PATH\
@@ -33,15 +33,15 @@ The controller and the container wrapper are shiped with Distlab under the .cont
 
 Depending on the data plan, the controller will instanciate replicaset controllers in order to manage the life cycle of the services you want to deploy.
 
-### <ins>The replicaset controller</ins>
+### <b>The replicaset controller</b>
 
 A replicaset controller is in charge of the life cycle of a set of instances of the same service. The desired number of services to bring to life is defined in the data plan. Each service is assigned a specific index by the replicaset controller and a specific configuration can be bound to each of them through the dataplan.
 
-### <ins>The container controller</ins>
+### <b>The container controller</b>
 
 This component is wrapping and monitoring the process container. It has a liveness probe which allows it to restart unresponsive processes. It handles one end of the communication link to a service instance. Actually, processes are hosted in a process container host which is an abstration on top of the service which allows the simulation to run your application components inside real processes or just as different threads on the controller process.
 
-### <ins>The container</ins>
+### <b>The container</b>
 The container is the base of the service you want to implement. It holds the other end of the communication link which allows the service to communicate with other services. Among other things, it offers base methods to allow the service to manage specific metrics, call other services either synchronously or asynchronously and access the service configurations.
 
 ## SERVICES
@@ -62,45 +62,86 @@ The data plan is defined with a yaml file and describes all the services you wan
 - define custom metrics for a specific service instance
 
 
-# GETTING STARTED (TODO)
+# GETTING STARTED
 
 ## PRE REQUISITE
 
-### Grab docker 
-
-### Grab vscode
-### Clone distlab
+- Docker https://www.docker.com/
+    - On Windows: WSL2 https://docs.microsoft.com/fr-fr/windows/wsl/install-win10
+- .Net 5.0 SDK (not only the runtime)
+     - On Windows: https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net50
+     - On Linux: https://docs.microsoft.com/en-us/dotnet/core/install/linux
+- VS Code https://code.visualstudio.com/ + OmniSharp extension
 
 
 ## SETUP
 
 The first time you need to create the observability stack.\
 The stack will be installed in Docker with Prometheus, Zipklin and Grafana.\
-Basic configuration ready to use with DISTLAB will be setup. If the configuration does not suit your need, you can modify it and reinstall the stack.
+Basic configuration ready to use with Distlab will be setup. If the configuration does not suit your need, you can modify it and reinstall the stack.
 
 - Windows
 
-    You need Docker for Desktop installed on your machine.
+    On Windows we recommend to install a WSL2 distro like Ubuntu and to [work with VS Code inside the distro](https://code.visualstudio.com/docs/remote/wsl). If you do so please follow the Linux section below.
 
-```cmd
-distlab/.observability> build.bat
-```
-- Linux (TODO)
+    Install the observability stack with:
 
-Once the stack created, next time just use:
-- Windows
+    ```cmd
+    distlab/.observability> build.bat
+    ```
 
-```cmd
-distlab/.observability> start.bat
-```
+    You need also to enable these urls for the metrics:
 
-```cmd
-distlab/.observability> stop.bat
-```
+    ```cmd
+    netsh http add urlacl url=http://+:7777/ user=DOMAIN\user
+    netsh http add urlacl url=http://+:7778/ user=DOMAIN\user
+    netsh http add urlacl url=http://+:7779/ user=DOMAIN\user
+    netsh http add urlacl url=http://+:7780/ user=DOMAIN\user
+    ```
+    Later you may need to define other ports depending on the number of Prometheus exporters you will define in the data plan.
 
-- Linux (TODO)
+- Linux
 
-Once the stack is launched, a simulation can be run; metrics and traces will be collected.
+  Install the observability stack with:
+
+    ```cmd
+    distlab/.observability> ./build.sh
+    ```
+
+## QUICK START
+
+Please ensure to setup the observability stack in the section above. From now on, we do not specify which type of system you're on. PLease run the appropriate command depending on you're working on Windows or Linux.
+
+- Start the observability stack
+    ```cmd
+    distlab/.observability> start
+    ```
+    
+- Run the sample simulation (inMemoryDBEventual)
+    ```cmd
+    distlab> run
+    ```
+
+- Open [Grafana](http://127.0.0.1:9030/) and select a dashboard
+
+    ![Dashboards](./img/dashboards.jpg "Select dashboard")
+
+    ![Distlab](./img/distlab_dash.jpg "Distlab overview dashboard")
+
+    ![In memoryDB](./img/inmemory_dash.jpg "In memoryDB dashboard")
+
+- Open [Zipkin](http://127.0.0.1:9411/) and search for traces
+
+    ![Zipkin](./img/zipkin.jpg "Zipkin traces")
+
+- Stop the sample simulation
+    ```cmd
+    CTRL+C
+    ```
+- Stop the observability stack
+    ```cmd
+    distlab/.observability> stop
+    ```
 
 # OBSERVABILITY STACK
 
@@ -120,9 +161,9 @@ Once the stack is launched, a simulation can be run; metrics and traces will be 
 - In DISTLAB, for prometheus metrics, each metric agent defines an http server exposing the /metrics endpoint.\
     For a simulation launched in thread mode, only one server should be used for the controller. Other prometheus configuration at service level should be disabled in the data plan.
 
-    server 1: http://127.0.0.1:7777/metrics\
-    server 2: http://127.0.0.1:7778/metrics\
-    server 3: http://127.0.0.1:7779/metrics\
+    server 1: http://127.0.0.1:7777/metrics \
+    server 2: http://127.0.0.1:7778/metrics \
+    server 3: http://127.0.0.1:7779/metrics \
     server 4: http://127.0.0.1:7780/metrics
 
 - Prometheus UI is available here after launch: [http://127.0.0.1:9090/](http://127.0.0.1:9090/)    
@@ -157,7 +198,7 @@ Once the stack is launched, a simulation can be run; metrics and traces will be 
 ### THREAD OR PROCESS
 
 There is one metric agent per container, so for each service instance, if the configuration specifies prometheus or trace enabled. So, per process, there is a clean separation between prometheus exporter instances.\
-When launch per thread, all prometheus exporters listens to all metrics because they are static. The configuration should eenable the prometheus on controller only in that case.
+When launch per thread, all prometheus exporters listens to all metrics because they are static. The configuration should enable the prometheus on controller only in that case.
 ## ZIPKIN
 
 Zipkin is used by the obervability strack to collected correlated traces.\
@@ -169,3 +210,6 @@ Grafana is used to provide dashboards to DISTLAB. Dashboards are connected to th
 Default dashboards are provided to help monitoring a simulation status.\
 Specific dashboards should be developped depending on the different aspects of your simulation you want to track.
 - Grafan UI is available here after launch: [http://127.0.0.1:9030/](http://127.0.0.1:9030/) 
+
+# DEVELOPING SERVICES (TODO)
+# DATAPLAN REFERENCE (TODO)

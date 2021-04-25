@@ -3,16 +3,11 @@ Config: # configuration section for the controller
         LogLevelName: "Information" # Critical | Debug | Error | Information | None | Trace | Warning
         LogToConsole: true
         IsLogJsonFormat: false    
-    ContainerHost: "thread" # process | thread
+    ContainerHost: "process" # process | thread
     Prometheus:
         Port: 7777
     Traces:
-        #Jaeger:
-        #    #Host: "jaeger"
-        #    Host: "127.0.0.1"
-        #    Port: 6831
         Zipkin:
-            #Host: "zipkin"
             Host: "127.0.0.1"
             Port: 9411
             Path: "/api/v2/spans"

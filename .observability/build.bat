@@ -1,4 +1,5 @@
 REM Prometheus
+md prometheus\data
 docker container rm distlab-prometheus --force
 docker container create ^
     --name distlab-prometheus ^

@@ -9,12 +9,12 @@ using distlab.runtime.container;
 
 namespace distlab.samples.db{
 
-    public class Config: ContainerConfigDefinition{
+    public class DBConfig: ContainerConfigDefinition{
         public bool IsSynchronous{get;set;}
 
     }
 
-    public class InMemoryDatabase : Container<Config>{
+    public class InMemoryDatabase : Container<DBConfig>{
 
         protected override async Task main() {
         }
@@ -33,15 +33,12 @@ namespace distlab.samples.db{
         public async Task<bool> set(string key, object value){
             if(IsLeader)
                 try{
-                    Task<bool>[]  tasks = Enumerable.Range(0, this.Definition.Instances).Select(i => call<bool>(ServiceName, "replicate", i, key, value)).ToArray();
-                    if(this.Definition[0].IsSynchronous){
-                        Task.WaitAll(tasks);
-                        return tasks.All(t => t.Result);
-                    }
-                    else{
-                        await Task.WhenAll(tasks);
-                    }
-                    return true;
+                    Task[]  tasks = this.Definition[0].IsSynchronous ? 
+                        // reliable broadcast replicate
+                        Enumerable.Range(0, this.Definition.Instances).Select(i => call<bool>(ServiceName, "replicate", i, key, value)).ToArray() : 
+                        Enumerable.Range(0, this.Definition.Instances).Select(i => invoke(ServiceName, "replicate", i, key, value)).ToArray();
+                    await Task.WhenAll(tasks);
+                    return this.Definition[0].IsSynchronous ? tasks.All(t => ((Task<bool>)t).Result) : true;
                 }
                 catch(Exception e){
                     logger.LogError("{name} unable to replicate: {exception}.",Name, e.Message);
@@ -50,7 +47,11 @@ namespace distlab.samples.db{
             else
                 try{
                     // a replica forward to the leader. could use call to check the result.
-                    await invoke(ServiceName, "set", 0, key, value);
+                    if(this.Definition[0].IsSynchronous)
+                        // need to wait for completion here
+                        await call<bool>(ServiceName, "set", 0, key, value);
+                    else
+                        await invoke(ServiceName, "set", 0, key, value);
                     return true;
                 }
                 catch(Exception e){

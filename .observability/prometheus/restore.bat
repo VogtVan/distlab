@@ -1,0 +1,1 @@
+docker run --rm -v %cd%/backup:/backup -v distlab-prometheus-data:/temp ubuntu bash -c "cd /backup && cp prometheus-win.yml /temp && cd /temp && tar xvf /backup/backup.tar --strip 1 > /dev/null"

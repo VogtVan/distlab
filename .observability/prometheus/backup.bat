@@ -1,0 +1,1 @@
+docker run --rm -v %cd%/backup:/backup -v distlab-prometheus-data:/dest ubuntu bash -c "cd /dest && tar cvf /backup/backup.tar ."

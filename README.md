@@ -84,10 +84,10 @@ Basic configuration ready to use with Distlab will be setup. If the configuratio
 
     On Windows we recommend to install a WSL2 distro like Ubuntu and to [work with VS Code inside the distro](https://code.visualstudio.com/docs/remote/wsl). If you do so please follow the Linux section below.
 
-    Install the observability stack with:
+    Install the observability stack <b>at root</b> with:
 
     ```cmd
-    distlab/.observability> build.bat
+    distlab> build.observability.bat
     ```
 
     You need also to enable these urls for the metrics:
@@ -102,24 +102,32 @@ Basic configuration ready to use with Distlab will be setup. If the configuratio
 
 - Linux
 
-  Install the observability stack with:
+  Install the observability stack <b>at root</b> with:
 
     ```cmd
-    distlab/.observability> ./build.sh
+    distlab> ./build.observability.sh
     ```
 
 ## QUICK START
 
-Please ensure to setup the observability stack in the section above. From now on, we do not specify which type of system you're on. PLease run the appropriate command depending on you're working on Windows or Linux.
+Please ensure to setup the observability stack in the section above. From now on, we do not specify which type of system you're on. Please run the appropriate command depending on you're working on Windows or Linux.
 
-- Start the observability stack
-    ```cmd
-    distlab/.observability> start
-    ```
+<b>Observing "read you writes" consistency</b>
+
+The sample will start an in memory database (key/value) with a leader and two replicas. A client will be launched as well, and will perform random values set against the DB for the same key at random intervals. Right after a set, it will perform a read on the same key and compare both values. If the values does not match, an inconsistency counter will be incremented.
+
+All set and read commands are targeted to an instance of the database following a round robin load balancing. A set command will always be redirected to the leader if it targets a replica. All get orders can be served by any DB instance.
+
+The "read your write" counter will be available on a graph.
+
+The default mode is set to asynchronous replication which will alow you to observe inconsistencies.
+
+You may then play with the data plan parameters to change the replication mode to synchronous and check that inconsistencies are gone.
+
     
-- Run the sample simulation (inMemoryDBEventual)
+- Run the sample simulation with the observability:
     ```cmd
-    distlab> run
+    distlab> run o
     ```
 
 - Open [Grafana](http://127.0.0.1:9030/) and select a dashboard
@@ -140,8 +148,49 @@ Please ensure to setup the observability stack in the section above. From now on
     ```
 - Stop the observability stack
     ```cmd
-    distlab/.observability> stop
+    distlab> stop
     ```
+
+- Database code: 
+    - [Database](./src/samples/db/InMemoryDatabase.cs)
+    - [Client](./src/samples/db/InMemoryDatabaseClient.cs)
+- Configuration file: [inMemoryDBEventual.yaml](.dataplan/inMemoryDBEventual.yaml) 
+
+    - Database section
+
+        You may change there the IsSynchronous value.
+        ```yaml
+            Services: # services to launch
+            -   Name: "inmemorydb" # public service name used to communicate
+                AssemblyName: "services.dll" # assembly where the service is defined
+                TypeName: "distlab.samples.db.InMemoryDatabase" # type of the service (derived from dislab.runtime.container.Container)
+                Instances: 3 # number of instances to maintain - each instance will be given a spepcific index
+                Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
+                -   Index: 0 # target service for the configuration
+                    Log:
+                        LogLevelName: "Information"
+                        LogToConsole: true
+                        IsLogJsonFormat: false
+                    IsSynchronous: false
+        ```
+    - Client section
+
+        You may change there the MinDelayMs and MaxDelayMs values to change the rate at which a set command is performed.
+        ```yaml
+        -   Name: "inmemorydbclient"
+            AssemblyName: "services.dll"
+            TypeName: "distlab.samples.db.InMemoryDatabaseClient"
+            Instances: 1
+            Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
+            -   Index: 0
+                Log:
+                    LogLevelName: "Information"
+                    LogToConsole: true
+                    IsLogJsonFormat: false
+                MinDelayMs: 100 # min delay before doing another set
+                MaxDelayMs: 200 # max delay before doing another set
+        ```
+
 
 # OBSERVABILITY STACK
 
@@ -209,7 +258,7 @@ No persistence is used between simulation runs. You may export them from Zipkin 
 Grafana is used to provide dashboards to DISTLAB. Dashboards are connected to the Prometheus instance.\
 Default dashboards are provided to help monitoring a simulation status.\
 Specific dashboards should be developped depending on the different aspects of your simulation you want to track.
-- Grafan UI is available here after launch: [http://127.0.0.1:9030/](http://127.0.0.1:9030/) 
+- Grafana UI is available here after launch: [http://127.0.0.1:9030/](http://127.0.0.1:9030/) 
 
 # DEVELOPING SERVICES (TODO)
 

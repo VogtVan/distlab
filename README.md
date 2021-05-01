@@ -133,14 +133,18 @@ You may then play with the data plan parameters to change the replication mode t
 - Open [Grafana](http://127.0.0.1:9030/) and select a dashboard
 
     ![Dashboards](./img/dashboards.jpg "Select dashboard")
+    - Overview with replicaset instances
 
     ![Distlab](./img/distlab_dash.jpg "Distlab overview dashboard")
+    - In memory DB sample
 
     ![In memoryDB](./img/inmemory_dash.jpg "In memoryDB dashboard")
 
 - Open [Zipkin](http://127.0.0.1:9411/) and search for traces
 
-    ![Zipkin](./img/zipkin.jpg "Zipkin traces")
+    You can see on the sequence below that the client has set the 16 value to the key, and has read the value from the replica #2 before the value was replicated, resulting in an inconsistency.
+
+    ![Zipkin](./img/zipkin-stale.jpg "Zipkin traces")
 
 - Stop the sample simulation
     ```cmd

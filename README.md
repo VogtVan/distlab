@@ -275,6 +275,6 @@ dotnet distlab.controller.dll <dataplan.yaml>
 ```
 
 # DATAPLAN REFERENCE (TODO)
-In order to launch a set of services you need to define a data plan in the .dataplan folder. A sample is defined  [here](.dataplan/InMemoryDBEventual.yaml).
+In order to launch a set of services you need to define a data plan in the .dataplan folder. A sample is defined  [here](.dataplan/inMemoryDBEventual.yaml).
 
 

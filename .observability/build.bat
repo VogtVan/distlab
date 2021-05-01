@@ -20,7 +20,7 @@ docker container create ^
     --volume "%cd%/grafana/provisioning:/etc/grafana/provisioning" ^
     -p 9030:3000 grafana/grafana
 REM network
-docker network rm distlab-network
+REM docker network rm distlab-network
 docker network create distlab-network
 docker network connect distlab-network distlab-prometheus
 docker network connect distlab-network distlab-grafana

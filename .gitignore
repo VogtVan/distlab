@@ -6,7 +6,7 @@ project.lock.json
 nupkg/
 
 #distlab
-.observability/prometheus/data
+packages-microsoft*
 
 # Visual Studio Code
 # .vscode

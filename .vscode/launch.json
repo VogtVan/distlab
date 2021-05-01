@@ -8,7 +8,7 @@
             "name": "Distlab",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/.controller/distlab.controller",
+            "program": "${workspaceFolder}/.controller/distlab.controller.dll",
             "args": ["inMemoryDBEventual"],
             "env": {
                 "DISTLAB_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container", 
@@ -16,7 +16,7 @@
                 "DISTLAB_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
             },
             "console": "internalConsole",
-            "stopAtEntry": false,            
+            "stopAtEntry": false,  
             "justMyCode": true
         },
         {

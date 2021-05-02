@@ -125,6 +125,10 @@ The default mode is set to asynchronous replication which will alow you to obser
 You may then play with the data plan parameters to change the replication mode to synchronous and check that inconsistencies are gone.
 
     
+- Build the sample simulation:
+    ```cmd
+    distlab> build
+    ```
 - Run the sample simulation with the observability:
     ```cmd
     distlab> run o

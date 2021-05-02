@@ -68,6 +68,7 @@ The data plan is defined with a yaml file and describes all the services you wan
 
 - Docker https://www.docker.com/
     - On Windows: WSL2 https://docs.microsoft.com/fr-fr/windows/wsl/install-win10
+    - On Linux: https://docs.docker.com/engine/install/ then create a docker security group https://docs.docker.com/engine/install/linux-postinstall/
 - .Net 5.0 SDK (not only the runtime)
      - On Windows: https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net50
      - On Linux: https://docs.microsoft.com/en-us/dotnet/core/install/linux

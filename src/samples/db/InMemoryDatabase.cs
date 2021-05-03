@@ -46,10 +46,10 @@ namespace distlab.samples.db{
                 }
             else
                 try{
-                    // a replica forward to the leader. could use call to check the result.
+                    // a replica forward to the leader.
                     if(this.Definition[0].IsSynchronous)
                         // need to wait for completion here
-                        await call<bool>(ServiceName, "set", 0, key, value);
+                        return await call<bool>(ServiceName, "set", 0, key, value);
                     else
                         await invoke(ServiceName, "set", 0, key, value);
                     return true;

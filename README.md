@@ -6,7 +6,7 @@ It is not an infrastructure meant to host production distributed applications, e
 
 Distlab is built on top of open source components. It runs either on Linux or Windows systems. Key components are the following one:
 
-- A distlab C# library (.Net 5.0)
+- A distlab C# library (.Net 7.0)
 - Prometheus for the collection of metrics
 - Zipkin for the collection of traces (Jaeger is also supported)
 - Grafana for the dashboards
@@ -21,13 +21,7 @@ The simplified view below shows some of the key components making the simulation
 ![Distlab](./img/DistlabConcepts.jpg "Distlab concepts")
 ### <b>The controller</b>
 
-This is the entry point of the simulation. It is launched with a single argument carrying the data plan name the controller needs to orchestrate. The controller needs three environment variables:
-- DISTLAB_CONTAINER_PGM_PATH\
-    this is the path to the container executable which wraps the services you will implement.
-- DISTLAB_CONTAINERS_ASSEMBLY_ROOT\
-    this the path to the folder containing the compiled services you want to deploy.
-- DISTLAB_DATA_PLAN_ROOT\
-    this is the path to the folder container data plans, the yaml file descriptors defining the workload you want to test.
+This is the entry point of the simulation. It is launched with a single argument carrying the data plan name the controller needs to orchestrate.
 
 The controller and the container wrapper are shiped with Distlab under the .controller and the .container folders.
 
@@ -69,8 +63,8 @@ The data plan is defined with a yaml file and describes all the services you wan
 - Docker https://www.docker.com/
     - On Windows: WSL2 https://docs.microsoft.com/fr-fr/windows/wsl/install-win10
     - On Linux: https://docs.docker.com/engine/install/ then create a docker security group https://docs.docker.com/engine/install/linux-postinstall/
-- .Net 5.0 SDK (not only the runtime)
-     - On Windows: https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net50
+- .Net 7.0 SDK (not only the runtime)
+     - On Windows: https://docs.microsoft.com/en-us/dotnet/core/install/windows?tabs=net70
      - On Linux: https://docs.microsoft.com/en-us/dotnet/core/install/linux
 - VS Code https://code.visualstudio.com/ + OmniSharp extension
 
@@ -94,10 +88,10 @@ Basic configuration ready to use with Distlab will be setup. If the configuratio
     You need also to enable these urls for the metrics:
 
     ```cmd
-    netsh http add urlacl url=http://+:7777/ user=DOMAIN\user
-    netsh http add urlacl url=http://+:7778/ user=DOMAIN\user
-    netsh http add urlacl url=http://+:7779/ user=DOMAIN\user
-    netsh http add urlacl url=http://+:7780/ user=DOMAIN\user
+    netsh http add urlacl url=http://+:7777/ user=[DOMAIN]\user
+    netsh http add urlacl url=http://+:7778/ user=[DOMAIN]\user
+    netsh http add urlacl url=http://+:7779/ user=[DOMAIN]\user
+    netsh http add urlacl url=http://+:7780/ user=[DOMAIN]\user
     ```
     Later you may need to define other ports depending on the number of Prometheus exporters you will define in the data plan.
 

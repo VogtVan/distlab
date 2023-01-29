@@ -1,11 +1,11 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v5.0",
+    "name": ".NETCoreApp,Version=v7.0",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v5.0": {
+    ".NETCoreApp,Version=v7.0": {
       "distlab.controller/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Hosting": "5.0.0",
@@ -470,14 +470,7 @@
           "System.Runtime": "4.1.0"
         }
       },
-      "System.Diagnostics.DiagnosticSource/5.0.1": {
-        "runtime": {
-          "lib/net5.0/System.Diagnostics.DiagnosticSource.dll": {
-            "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.220.61120"
-          }
-        }
-      },
+      "System.Diagnostics.DiagnosticSource/5.0.1": {},
       "System.Diagnostics.EventLog/5.0.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0",

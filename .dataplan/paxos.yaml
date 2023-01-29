@@ -1,0 +1,46 @@
+Config: # configuration section for the controller
+    Log:
+        LogLevelName: "Information" # Critical | Debug | Error | Information | None | Trace | Warning
+        LogToConsole: true
+        IsLogJsonFormat: false
+    ContainerHost: "thread" # process | thread - Please use thread mode for debug and process mode to collect traces and metrics
+    Prometheus:
+        Port: 7777
+    Traces:
+        Zipkin:
+            Host: "127.0.0.1"
+            Port: 9411
+            Path: "/api/v2/spans"
+    TracesEnabled: true # affect Zipkin or Jaeger exporters only
+Services: # services to launch
+-   Name: "paxos" # public service name used to communicate
+    AssemblyName: "services.dll" # assembly where the service is defined
+    TypeName: "distlab.samples.consensus.PaxosAgent" # type of the service (derived from dislab.runtime.container.Container)
+    Instances: 3 # number of instances to maintain - each instance will be given a spepcific index
+    Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
+    -   Index: 0 # target service for the configuration
+        Log:
+            LogLevelName: "Information"
+            LogToConsole: true
+            IsLogJsonFormat: false
+        IsLeader: true # custom property config for InMemoryDatabase sample - you may add any custom field
+        MinDelayMs: 1000 # min delay before doing another proposal
+        MaxDelayMs: 2000 # max delay before doing another proposal
+        StartingProposalNumber: 0
+        TracesEnabled: true 
+        Prometheus:
+            Port: 7778
+    -   Index: 1
+        Log:
+            LogLevelName: "Information"
+            LogToConsole: true
+            IsLogJsonFormat: false
+        TracesEnabled: true
+        Prometheus:
+            Port: 7779
+    -   Index: 2
+        Log:
+            LogLevelName: "Information"
+            LogToConsole: true
+            IsLogJsonFormat: false
+        TracesEnabled: true

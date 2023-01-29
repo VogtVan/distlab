@@ -5,18 +5,33 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Distlab",
+            "name": "Distlab inMemoryDBEventual",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/.controller/distlab.controller.dll",
+            "program": "${workspaceFolder}/.controller/distlab.controller.exe",
             "args": ["inMemoryDBEventual"],
             "env": {
-                "DISTLAB_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container", 
+                "DISTLAB_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container.exe", 
                 "DISTLAB_CONTAINERS_ASSEMBLY_ROOT": "${workspaceFolder}/.containers", 
                 "DISTLAB_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
             },
             "console": "internalConsole",
-            "stopAtEntry": false,  
+            "stopAtEntry": false,            
+            "justMyCode": true
+        },
+        {
+            "name": "Distlab paxos",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/.controller/distlab.controller.exe",
+            "args": ["paxos"],
+            "env": {
+                "DISTLAB_CONTAINER_PGM_PATH": "${workspaceFolder}/.container/distlab.container.exe", 
+                "DISTLAB_CONTAINERS_ASSEMBLY_ROOT": "${workspaceFolder}/.containers", 
+                "DISTLAB_DATA_PLAN_ROOT": "${workspaceFolder}/.dataplan"
+            },
+            "console": "internalConsole",
+            "stopAtEntry": false,            
             "justMyCode": true
         },
         {

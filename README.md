@@ -103,6 +103,14 @@ Basic configuration ready to use with Distlab will be setup. If the configuratio
     distlab> ./build.observability.sh
     ```
 
+### Warning
+- The build.observability may output some error messages. This is a known bug but it does not prevent it from working.
+- The [default configuration](/.observability/prometheus/backup/prometheus.yml) provided for prometheus assumes the docker network bridge IP address is 172.17.0.1. It may be necessary to change it to the actual one. To get the IP address, please run:
+
+    ```cmd
+    distlab> docker network inspect bridge 
+    ```
+If the gateway ip address differs from 172.17.0.1, please update the prometheus.yml file accordingly, then build the observability stack.
 ## QUICK START
 
 Please ensure to setup the observability stack in the section above. From now on, we do not specify which type of system you're on. Please run the appropriate command depending on you're working on Windows or Linux.
@@ -200,7 +208,7 @@ You may then play with the data plan parameters to change the replication mode t
 
 ## PROMETHEUS
 
-- A [default configuration](/.observability/prometheus/prometheus.yml) is provided which scrapes four different URLs. Those URLs are to be used in the data plan you want to launch.
+- A [default configuration](/.observability/prometheus/backup/prometheus.yml) is provided which scrapes four different URLs. Those URLs are to be used in the data plan you want to launch.
 
     The four metrics servers are:
 

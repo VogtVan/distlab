@@ -6,7 +6,7 @@ It is not an infrastructure meant to host production distributed applications, e
 
 Distlab is built on top of open source components. It runs either on Linux or Windows systems. Key components are the following one:
 
-- A distlab C# library (.Net 7.0)
+- A distlab C# library (.Net 6.0)
 - Prometheus for the collection of metrics
 - Zipkin for the collection of traces (Jaeger is also supported)
 - Grafana for the dashboards

@@ -19,6 +19,7 @@ Services: # services to launch
     Instances: 3 # number of instances to maintain - each instance will be given a spepcific index
     Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
     -   Index: 0 # target service for the configuration
+        ActorMode: true # will process messages in a single thread if true
         Log:
             LogLevelName: "Information"
             LogToConsole: true
@@ -28,6 +29,7 @@ Services: # services to launch
         Prometheus:
             Port: 7778
     -   Index: 1
+        ActorMode: true # will process messages in a single thread if true
         Log:
             LogLevelName: "Information"
             LogToConsole: true
@@ -38,6 +40,7 @@ Services: # services to launch
         Prometheus:
             Port: 7779
     -   Index: 2
+        ActorMode: true # will process messages in a single thread if true
         Log:
             LogLevelName: "Information"
             LogToConsole: true
@@ -50,6 +53,7 @@ Services: # services to launch
     Instances: 1
     Config: # configuration section for a replicaset - use index to target a specific instance - not mandatory
     -   Index: 0
+        ActorMode: true # will process messages in a single thread if true
         Log:
             LogLevelName: "Information"
             LogToConsole: true
